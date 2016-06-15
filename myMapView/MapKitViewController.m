@@ -21,23 +21,6 @@
     return self;
 }
 
-#pragma mark - Set Different type of map
-- (IBAction)setMap:(id)sender {
-    switch (((UISegmentedControl *)sender).selectedSegmentIndex) {
-        case 0:
-            self.mapView.mapType = MKMapTypeStandard;
-            break;
-        case 1:
-            self.mapView.mapType = MKMapTypeHybrid;
-            break;
-        case 2:
-            self.mapView.mapType = MKMapTypeSatellite;
-            break;
-        default:
-            break;
-    }
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -61,11 +44,20 @@
     [super didReceiveMemoryWarning];
 }
 
-
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    NSLog(@"Location: %f, %f",
-          userLocation.location.coordinate.latitude,
-          userLocation.location.coordinate.longitude);
+- (IBAction)setMap:(id)sender {
+    switch (((UISegmentedControl *)sender).selectedSegmentIndex) {
+        case 0:
+            self.mapView.mapType = MKMapTypeStandard;
+            break;
+        case 1:
+            self.mapView.mapType = MKMapTypeHybrid;
+            break;
+        case 2:
+            self.mapView.mapType = MKMapTypeSatellite;
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)setTTTPin {

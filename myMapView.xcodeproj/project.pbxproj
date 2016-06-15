@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		534741E51E2BC9742151B138 /* libPods-myMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5251222ADA2E9A156E4ABCD1 /* libPods-myMapView.a */; };
+		AA23353D1D11C1BA00097192 /* MarkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA23353C1D11C1BA00097192 /* MarkerView.m */; };
+		AA23353F1D11C20200097192 /* MarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA23353E1D11C20200097192 /* MarkerView.xib */; };
 		AA65F7861D0F349400F231B7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65F7851D0F349400F231B7 /* main.m */; };
 		AA65F7891D0F349400F231B7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65F7881D0F349400F231B7 /* AppDelegate.m */; };
 		AA65F78C1D0F349400F231B7 /* MapKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65F78B1D0F349400F231B7 /* MapKitViewController.m */; };
@@ -28,6 +30,9 @@
 /* Begin PBXFileReference section */
 		5251222ADA2E9A156E4ABCD1 /* libPods-myMapView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-myMapView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82E2E41298315B66CC3366CB /* Pods-myMapView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myMapView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-myMapView/Pods-myMapView.debug.xcconfig"; sourceTree = "<group>"; };
+		AA23353B1D11C1BA00097192 /* MarkerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerView.h; sourceTree = "<group>"; };
+		AA23353C1D11C1BA00097192 /* MarkerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerView.m; sourceTree = "<group>"; };
+		AA23353E1D11C20200097192 /* MarkerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MarkerView.xib; sourceTree = "<group>"; };
 		AA65F7811D0F349400F231B7 /* myMapView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myMapView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA65F7851D0F349400F231B7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA65F7871D0F349400F231B7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -147,6 +152,9 @@
 				AA65F78D1D0F349400F231B7 /* Main.storyboard */,
 				AA65F7921D0F349400F231B7 /* LaunchScreen.storyboard */,
 				AA6C00921D105C4100A7866E /* WebViewController.xib */,
+				AA23353E1D11C20200097192 /* MarkerView.xib */,
+				AA23353B1D11C1BA00097192 /* MarkerView.h */,
+				AA23353C1D11C1BA00097192 /* MarkerView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -232,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA23353F1D11C20200097192 /* MarkerView.xib in Resources */,
 				AA65F7941D0F349400F231B7 /* LaunchScreen.storyboard in Resources */,
 				AA80C0F51D0F3F7E00C9B5E4 /* Default-568h@2x.png in Resources */,
 				AA65F7911D0F349400F231B7 /* Assets.xcassets in Resources */,
@@ -298,6 +307,7 @@
 				AA65F78C1D0F349400F231B7 /* MapKitViewController.m in Sources */,
 				AA65F7891D0F349400F231B7 /* AppDelegate.m in Sources */,
 				AA6C00931D105C4100A7866E /* WebViewController.m in Sources */,
+				AA23353D1D11C1BA00097192 /* MarkerView.m in Sources */,
 				AA65F7861D0F349400F231B7 /* main.m in Sources */,
 				AAA7B6BD1D10ADF5001777DA /* GoogleMapsViewController.m in Sources */,
 				AA7A8FD61D0F6EB1007B45C9 /* MyCustomAnnotation.m in Sources */,

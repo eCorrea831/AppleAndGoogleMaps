@@ -13,12 +13,13 @@
 
 @interface GoogleMapsViewController : UIViewController <GMSMapViewDelegate>
 
-//maybe needed
-@property (nonatomic, strong) CLLocationManager * locationManager;
-
-//definitely needed
-@property (weak, nonatomic) IBOutlet GMSMapView *mapView;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) WebViewController * webObject;
+@property (weak, nonatomic) IBOutlet GMSMapView * mapView;
+@property (weak, nonatomic) IBOutlet UISearchBar * searchBar;
+@property (nonatomic, retain) GMSCameraPosition * tttCamera;
+@property (nonatomic, retain) GMSCameraPosition * mozzarelliCamera;
+@property (nonatomic, retain) GMSCameraPosition * choptCamera;
+@property (nonatomic, retain) GMSCameraPosition * paneraCamera;
 
 - (IBAction)setMap:(id)sender;
 
