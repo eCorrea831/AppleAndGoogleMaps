@@ -8,6 +8,7 @@
 
 #import "GoogleMapsViewController.h"
 #import "MarkerView.h"
+#import "MyCustomMarker.h"
 
 @interface GoogleMapsViewController ()
 
@@ -17,9 +18,6 @@
 
 /*
  TODO:
- - add logo to pin
- - add info button to pin
- - have info button take you to webVC
  - get some restaurants from Google Places
  - utilize search bar instead
  */
@@ -27,15 +25,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tttCamera = [GMSCameraPosition cameraWithLatitude:40.741423 longitude:-73.989660 zoom:12];
-    self.mozzarelliCamera = [GMSCameraPosition cameraWithLatitude:40.7403711 longitude:-73.989601 zoom:12];
-    self.choptCamera = [GMSCameraPosition cameraWithLatitude:40.7414436 longitude:-73.9944474 zoom:12];
-    self.paneraCamera = [GMSCameraPosition cameraWithLatitude:40.7425649 longitude:-73.9929699 zoom:12];
+    self.mainCamera = [GMSCameraPosition cameraWithLatitude:40.741423 longitude:-73.989660 zoom:12];
 
-    self.mapView.camera = self.tttCamera;
+    self.mapView.camera = self.mainCamera;
     self.mapView.delegate = self;
     
-    GMSCoordinateBounds * bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.tttCamera.target coordinate:self.tttCamera.target];
+    GMSCoordinateBounds * bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.mainCamera.target coordinate:self.mainCamera.target];
     [self.mapView moveCamera:[GMSCameraUpdate fitBounds:bounds]];
     
     [self dropHardCodedPins];
@@ -45,21 +40,22 @@
     [super didReceiveMemoryWarning];
 }
 
-- (UIView*)mapView:(GMSMapView*)mapView markerInfoWindow:(GMSMarker *)marker {
+- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(MyCustomMarker *)marker {
    
     MarkerView * infoWindow = [[[NSBundle mainBundle]loadNibNamed:@"MarkerView" owner:self options:nil]objectAtIndex:0];
     
     infoWindow.markerTitle.text = marker.title;
     infoWindow.markerSubtitle.text = marker.snippet;
-    infoWindow.markerImage.image= [UIImage imageNamed:@"icon_my"];
+    infoWindow.markerImage.image = marker.image;
     
     return infoWindow;
 }
 
-- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
-    
-    self.webObject = [[WebViewController alloc]initWithNibName:@"webController" bundle:nil];
-    [self.navigationController pushViewController:self.webObject animated:YES];
+-(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
+
+    WebViewController * webVC = [WebViewController new];
+    webVC.url = [NSURL URLWithString:@"http://www.google.com"];
+    [self presentViewController:webVC animated:YES completion:nil];
 }
 
 - (IBAction)setMap:(id)sender {
@@ -80,39 +76,34 @@
 }
 
 - (void)dropHardCodedPins {
-    
-    //ttt
-    GMSMarker * tttMarker = [[GMSMarker alloc]init];
-    tttMarker.position = self.tttCamera.target;
-    tttMarker.title = @"Turn to Tech";
-    tttMarker.snippet = @"Learn, Build Apps, Get Hired";
-    tttMarker.map = self.mapView;
-    
-    //mozzarelli
-    GMSMarker * mozzarelliMarker = [[GMSMarker alloc]init];
-    mozzarelliMarker.position = self.mozzarelliCamera.target;
-    mozzarelliMarker.title = @"Mozzarelli's";
-    mozzarelliMarker.snippet = @"Gluten-Free Pizza";
-    mozzarelliMarker.map = self.mapView;
-    
-    //chopt
-    GMSMarker * choptMarker = [[GMSMarker alloc]init];
-    choptMarker.position = self.choptCamera.target;
-    choptMarker.title = @"Chop't";
-    choptMarker.snippet = @"Creative Salad";
-    choptMarker.map = self.mapView;
-    
-    //panera
-    GMSMarker * paneraMarker = [[GMSMarker alloc]init];
-    paneraMarker.position = self.paneraCamera.target;
-    paneraMarker.title = @"Panera";
-    paneraMarker.snippet = @"Bakers of Bread, Fresh from the Oven.";
-    paneraMarker.map = self.mapView;
 
-// imageName:@"ttt" url:[NSURL URLWithString:@"http://www.turntotech.io"]];
-// imageName:@"mozzarelli" url:[NSURL URLWithString:@"http://www.mozzarellis.com/"]];
-// imageName:@"chopt" url:[NSURL URLWithString:@"http://choptsalad.com/"]];
-// imageName:@"panera" url:[NSURL URLWithString:@"https://www.panerabread.com/en-us/home.html"]];
+    MyCustomMarker * tttMarker = [[MyCustomMarker alloc]initWithTitle:@"Turn to Tech"
+                                                              snippet:@"Learn, Build Apps, Get Hired"
+                                                                image:[UIImage imageNamed:@"ttt"]
+                                                                  url:[NSURL URLWithString:@"http://www.turntotech.io"]
+                                                             position:self.mainCamera.target
+                                                                  map:self.mapView];
+    
+    MyCustomMarker * mozzarelliMarker = [[MyCustomMarker alloc]initWithTitle:@"Mozzarelli's"
+                                                                     snippet:@"Gluten-Free Pizza"
+                                                                       image:[UIImage imageNamed:@"mozzerelli"]
+                                                                         url:[NSURL URLWithString:@"http://www.mozzarellis.com/"]
+                                                                    position:CLLocationCoordinate2DMake(40.7403711, -73.989601)
+                                                                         map:self.mapView];
+
+    MyCustomMarker * choptMarker = [[MyCustomMarker alloc]initWithTitle:@"Chop't"
+                                                                snippet:@"Creative Salad"
+                                                                  image:[UIImage imageNamed:@"chopt"]
+                                                                    url:[NSURL URLWithString:@"http://choptsalad.com/"]
+                                                               position:CLLocationCoordinate2DMake(40.7414436, -73.9944474)
+                                                                    map:self.mapView];
+    
+    MyCustomMarker * paneraMarker = [[MyCustomMarker alloc]initWithTitle:@"Panera"
+                                                                 snippet:@"Bakers of Bread, Fresh from the Oven."
+                                                                   image:[UIImage imageNamed:@"panera"]
+                                                                     url:[NSURL URLWithString:@"https://www.panerabread.com/en-us/home.html"]
+                                                                position:CLLocationCoordinate2DMake(40.7425649, -73.9929699)
+                                                                     map:self.mapView];
 }
 
 @end

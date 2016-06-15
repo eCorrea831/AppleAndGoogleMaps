@@ -10,6 +10,7 @@
 		534741E51E2BC9742151B138 /* libPods-myMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5251222ADA2E9A156E4ABCD1 /* libPods-myMapView.a */; };
 		AA23353D1D11C1BA00097192 /* MarkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA23353C1D11C1BA00097192 /* MarkerView.m */; };
 		AA23353F1D11C20200097192 /* MarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA23353E1D11C20200097192 /* MarkerView.xib */; };
+		AA23354E1D11FB7700097192 /* MyCustomMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = AA23354D1D11FB7700097192 /* MyCustomMarker.m */; };
 		AA65F7861D0F349400F231B7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65F7851D0F349400F231B7 /* main.m */; };
 		AA65F7891D0F349400F231B7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65F7881D0F349400F231B7 /* AppDelegate.m */; };
 		AA65F78C1D0F349400F231B7 /* MapKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA65F78B1D0F349400F231B7 /* MapKitViewController.m */; };
@@ -33,6 +34,8 @@
 		AA23353B1D11C1BA00097192 /* MarkerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerView.h; sourceTree = "<group>"; };
 		AA23353C1D11C1BA00097192 /* MarkerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerView.m; sourceTree = "<group>"; };
 		AA23353E1D11C20200097192 /* MarkerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MarkerView.xib; sourceTree = "<group>"; };
+		AA23354C1D11FB7700097192 /* MyCustomMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCustomMarker.h; sourceTree = "<group>"; };
+		AA23354D1D11FB7700097192 /* MyCustomMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomMarker.m; sourceTree = "<group>"; };
 		AA65F7811D0F349400F231B7 /* myMapView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myMapView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA65F7851D0F349400F231B7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA65F7871D0F349400F231B7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 			children = (
 				AA7A8FD41D0F6EB1007B45C9 /* MyCustomAnnotation.h */,
 				AA7A8FD51D0F6EB1007B45C9 /* MyCustomAnnotation.m */,
+				AA23354C1D11FB7700097192 /* MyCustomMarker.h */,
+				AA23354D1D11FB7700097192 /* MyCustomMarker.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				AA23353D1D11C1BA00097192 /* MarkerView.m in Sources */,
 				AA65F7861D0F349400F231B7 /* main.m in Sources */,
 				AAA7B6BD1D10ADF5001777DA /* GoogleMapsViewController.m in Sources */,
+				AA23354E1D11FB7700097192 /* MyCustomMarker.m in Sources */,
 				AA7A8FD61D0F6EB1007B45C9 /* MyCustomAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

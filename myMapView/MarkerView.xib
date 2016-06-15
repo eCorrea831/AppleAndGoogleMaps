@@ -30,13 +30,18 @@
                         <constraint firstAttribute="width" constant="60" id="MC9-ye-ctn"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dw0-aw-kmn">
+                    <rect key="frame" x="230" y="8" width="22" height="22"/>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="dw0-aw-kmn" secondAttribute="trailing" constant="8" id="3A3-Gg-wxg"/>
                 <constraint firstItem="HDA-y8-haw" firstAttribute="leading" secondItem="N5c-9Q-LQV" secondAttribute="trailing" constant="18" id="DUr-pc-wm5"/>
                 <constraint firstItem="aZZ-LT-vam" firstAttribute="leading" secondItem="N5c-9Q-LQV" secondAttribute="trailing" constant="18" id="GSi-K7-MQp"/>
                 <constraint firstItem="N5c-9Q-LQV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="QJh-5d-iq8"/>
                 <constraint firstItem="aZZ-LT-vam" firstAttribute="bottom" secondItem="N5c-9Q-LQV" secondAttribute="bottom" id="Vx4-cR-Kwj"/>
+                <constraint firstItem="dw0-aw-kmn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="l2h-PK-yUg"/>
                 <constraint firstItem="HDA-y8-haw" firstAttribute="top" secondItem="N5c-9Q-LQV" secondAttribute="top" id="sxN-cL-1C3"/>
                 <constraint firstItem="N5c-9Q-LQV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="zrl-IQ-34x"/>
             </constraints>
@@ -46,7 +51,7 @@
                 <outlet property="markerSubtitle" destination="aZZ-LT-vam" id="dbG-Ft-Wte"/>
                 <outlet property="markerTitle" destination="HDA-y8-haw" id="4xK-Kh-zg2"/>
             </connections>
-            <point key="canvasLocation" x="414" y="421"/>
+            <point key="canvasLocation" x="-22" y="-121"/>
         </view>
     </objects>
 </document>
