@@ -149,7 +149,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="aL9-62-3p2" id="FWj-mf-XUX"/>
-                        <outlet property="searchBar" destination="cBY-wg-XKg" id="iub-VY-J2X"/>
+                        <outlet property="searchBar" destination="cBY-wg-XKg" id="tjs-so-kGJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V7K-uY-diJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

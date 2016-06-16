@@ -11,7 +11,7 @@
 
 @import GoogleMaps;
 
-@interface GoogleMapsViewController : UIViewController <GMSMapViewDelegate>
+@interface GoogleMapsViewController : UIViewController <GMSMapViewDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) WebViewController * webObject;
 @property (weak, nonatomic) IBOutlet GMSMapView * mapView;

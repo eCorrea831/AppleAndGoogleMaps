@@ -12,6 +12,7 @@
 
 @property (nonatomic, retain) UIImage * image;
 @property (nonatomic, retain) NSURL * url;
+@property (nonatomic, retain) NSString * placeID;
 
 - (instancetype)initWithTitle:(NSString *)title snippet:(NSString *)snippet image:(UIImage *)image url:(NSURL *)url position:(CLLocationCoordinate2D)position map:(GMSMapView *)map;
 
