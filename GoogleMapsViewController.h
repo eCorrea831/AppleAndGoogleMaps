@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet GMSMapView * mapView;
 @property (weak, nonatomic) IBOutlet UISearchBar * searchBar;
 @property (nonatomic, retain) GMSCameraPosition * mainCamera;
+@property (nonatomic, retain) NSArray * places;
 
 - (IBAction)setMap:(id)sender;
 

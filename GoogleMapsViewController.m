@@ -41,18 +41,70 @@
    
     MarkerView * infoWindow = [[[NSBundle mainBundle]loadNibNamed:@"MarkerView" owner:self options:nil]objectAtIndex:0];
     
+    if (marker.image == nil) {
+        
+        NSURL * URL = [NSURL URLWithString:marker.iconWebString];
+        NSURLRequest * request = [NSURLRequest requestWithURL:URL];
+        
+        NSURLSession * session = [NSURLSession sharedSession];
+        NSURLSessionDataTask * task = [session dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse *response, NSError * error) {
+        
+            if (error != nil) {
+                NSLog(@"%@", error.localizedDescription);
+                return;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImage * image = [UIImage imageWithData:data];
+                marker.image = image;
+                infoWindow.markerImage.image = marker.image;
+            });
+        }];
+        
+        [task resume];
+    }
+    
     infoWindow.markerTitle.text = marker.title;
     infoWindow.markerSubtitle.text = marker.snippet;
     infoWindow.markerImage.image = marker.image;
-    
+
     return infoWindow;
 }
 
--(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(MyCustomMarker *)marker {
-
-    //if url == "" do another nsurlsession to look up website by id # then assign url
-    
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(MyCustomMarker *)marker {
     WebViewController * webVC = [WebViewController new];
+
+    if (marker.url == nil) {
+        
+        NSString * urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?placeid=%@&key=AIzaSyCtiRMJNJQSyYZ94sivn6RxY7I2uHq68FQ", marker.placeID];
+        
+        NSURL * URL = [NSURL URLWithString:urlString];
+        NSURLRequest * request = [NSURLRequest requestWithURL:URL];
+        
+        NSURLSession * session = [NSURLSession sharedSession];
+        NSURLSessionDataTask * task = [session dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse *response, NSError * error) {
+            
+            if (error != nil) {
+                NSLog(@"%@", error.localizedDescription);
+                return;
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSString * jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                
+                NSData * jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+                NSError * jsonError;
+                NSDictionary * parsedData = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&jsonError];
+                NSString * string = parsedData[@"result"][@"website"];
+                
+                NSURL * url = [NSURL URLWithString:string];
+                marker.url = url;
+                webVC.url = marker.url;
+            });
+        }];
+        
+        [task resume];
+    }
+    
     webVC.url = marker.url;
     [self presentViewController:webVC animated:YES completion:nil];
 }
@@ -107,6 +159,9 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
+    [self.searchBar resignFirstResponder];
+    [[self view] endEditing:YES];
+    
     NSURLSession * session = [NSURLSession sharedSession];
     
     CLLocationCoordinate2D location = self.mapView.camera.target;
@@ -131,9 +186,10 @@
         NSError * jsonError;
         NSDictionary * parsedData = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&jsonError];
         
-        NSArray * places = parsedData[@"results"];
+        self.places = nil;
+        self.places = parsedData[@"results"];
 
-        if (places.count == 0) {
+        if (self.places.count == 0) {
             
             UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"No Results" message:nil preferredStyle:UIAlertControllerStyleAlert];
             
@@ -145,28 +201,22 @@
             return;
         }
 
-        for (int index = 1; index < places.count; index++) {
+        for (int index = 1; index < self.places.count; index++) {
+
+            NSString * title = self.places[index][@"name"];
+            NSString * snippet = [NSString stringWithFormat:@"%@", self.places[index][@"rating"]];
+            NSString * googlePlacesID = self.places[index][@"place_id"];
+            NSString * icon = self.places[index][@"icon"];
+            double lat = [self.places[index][@"geometry"][@"location"][@"lat"] floatValue];
+            double lng = [self.places[index][@"geometry"][@"location"][@"lng"] floatValue];
             
-            //TODO:clear array with each new search
-            //TODO:change to NSURLSession
-            //TODO:add another NSURLSession for the website
-            NSURL * iconURL = [NSURL URLWithString:places[index][@"icon"]];
-            NSData * imageData = [[NSData alloc]initWithContentsOfURL:iconURL];
-            
-            NSString * title = places[index][@"name"];
-            NSString * snippet = [NSString stringWithFormat:@"%@", places[index][@"rating"]];
-            NSString * googlePlacesID = places[index][@"id"];
-            double lat = [places[index][@"geometry"][@"location"][@"lat"] floatValue];
-            double lng = [places[index][@"geometry"][@"location"][@"lng"] floatValue];
-            
-            MyCustomMarker * newMarker = [[MyCustomMarker alloc]initWithTitle:title
-                                                                      snippet:snippet
-                                                                        image:[UIImage imageWithData:imageData]
-                                                                          url:[NSURL URLWithString:@""]
-                                                                     position:CLLocationCoordinate2DMake(lat,lng)
-                                                                          map:self.mapView];
+            MyCustomMarker * newMarker = [[MyCustomMarker alloc]init];
+            newMarker.title = title;
+            newMarker.snippet = snippet;
+            newMarker.position = CLLocationCoordinate2DMake(lat, lng);
             newMarker.placeID = googlePlacesID;
-            
+            newMarker.iconWebString = icon;
+            newMarker.map = self.mapView;
         }
     }];
         
