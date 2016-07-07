@@ -112,32 +112,32 @@
 - (void)dropHardCodedPins {
 
     __unused MyCustomMarker * tttMarker = [[MyCustomMarker alloc]initWithTitle:@"Turn to Tech"
-                                                              snippet:@"Learn, Build Apps, Get Hired"
-                                                                image:[UIImage imageNamed:@"ttt"]
-                                                                  url:[NSURL URLWithString:@"http://www.turntotech.io"]
-                                                             position:self.mainCamera.target
-                                                                  map:self.mapView];
+                                                                       snippet:@"Learn, Build Apps, Get Hired"
+                                                                         image:[UIImage imageNamed:@"ttt"]
+                                                                           url:[NSURL URLWithString:@"http://www.turntotech.io"]
+                                                                      position:self.mainCamera.target
+                                                                           map:self.mapView];
     
     __unused MyCustomMarker * mozzarelliMarker = [[MyCustomMarker alloc]initWithTitle:@"Mozzarelli's"
-                                                                     snippet:@"Gluten-Free Pizza"
-                                                                       image:[UIImage imageNamed:@"mozzarelli"]
-                                                                         url:[NSURL URLWithString:@"http://www.mozzarellis.com/"]
-                                                                    position:CLLocationCoordinate2DMake(40.7403711, -73.989601)
-                                                                         map:self.mapView];
+                                                                              snippet:@"Gluten-Free Pizza"
+                                                                                image:[UIImage imageNamed:@"mozzarelli"]
+                                                                                  url:[NSURL URLWithString:@"http://www.mozzarellis.com/"]
+                                                                             position:CLLocationCoordinate2DMake(40.7403711, -73.989601)
+                                                                                  map:self.mapView];
 
     __unused MyCustomMarker * choptMarker = [[MyCustomMarker alloc]initWithTitle:@"Chop't"
-                                                                snippet:@"Creative Salad"
-                                                                  image:[UIImage imageNamed:@"chopt"]
-                                                                    url:[NSURL URLWithString:@"http://choptsalad.com/"]
-                                                               position:CLLocationCoordinate2DMake(40.7414436, -73.9944474)
-                                                                    map:self.mapView];
+                                                                         snippet:@"Creative Salad"
+                                                                           image:[UIImage imageNamed:@"chopt"]
+                                                                             url:[NSURL URLWithString:@"http://choptsalad.com/"]
+                                                                        position:CLLocationCoordinate2DMake(40.7414436, -73.9944474)
+                                                                             map:self.mapView];
     
     __unused MyCustomMarker * paneraMarker = [[MyCustomMarker alloc]initWithTitle:@"Panera"
-                                                                 snippet:@"Bakers of Bread, Fresh from the Oven."
-                                                                   image:[UIImage imageNamed:@"panera"]
-                                                                     url:[NSURL URLWithString:@"https://www.panerabread.com/en-us/home.html"]
-                                                                position:CLLocationCoordinate2DMake(40.7425649, -73.9929699)
-                                                                     map:self.mapView];
+                                                                          snippet:@"Bakers of Bread, Fresh from the Oven."
+                                                                            image:[UIImage imageNamed:@"panera"]
+                                                                              url:[NSURL URLWithString:@"https://www.panerabread.com/en-us/home.html"]
+                                                                         position:CLLocationCoordinate2DMake(40.7425649, -73.9929699)
+                                                                              map:self.mapView];
 }
 
 - (IBAction)setMap:(id)sender {
@@ -165,7 +165,7 @@
     NSURLSession * session = [NSURLSession sharedSession];
     
     CLLocationCoordinate2D location = self.mapView.camera.target;
-    NSString * googleString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=1000&types=%@&name=&key=AIzaSyCtiRMJNJQSyYZ94sivn6RxY7I2uHq68FQ", location.latitude, location.longitude, searchBar.text];
+    NSString * googleString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=1000&name=%@&sensor=true&key=AIzaSyCtiRMJNJQSyYZ94sivn6RxY7I2uHq68FQ", location.latitude, location.longitude, searchBar.text];
     
     NSURLSessionDataTask * googleData = [session dataTaskWithURL:[NSURL URLWithString:googleString] completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
         
@@ -200,32 +200,29 @@
             
             return;
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mapView clear];
+            for (int index = 0; index < self.places.count; index++) {
 
-        for (int index = 1; index < self.places.count; index++) {
-
-            NSString * title = self.places[index][@"name"];
-            NSString * snippet = [NSString stringWithFormat:@"%@", self.places[index][@"rating"]];
-            NSString * googlePlacesID = self.places[index][@"place_id"];
-            NSString * icon = self.places[index][@"icon"];
-            double lat = [self.places[index][@"geometry"][@"location"][@"lat"] floatValue];
-            double lng = [self.places[index][@"geometry"][@"location"][@"lng"] floatValue];
-            
-            MyCustomMarker * newMarker = [[MyCustomMarker alloc]init];
-            newMarker.title = title;
-            newMarker.snippet = snippet;
-            newMarker.position = CLLocationCoordinate2DMake(lat, lng);
-            newMarker.placeID = googlePlacesID;
-            newMarker.iconWebString = icon;
-            newMarker.map = self.mapView;
-        }
+                NSString * title = self.places[index][@"name"];
+                NSString * snippet = [NSString stringWithFormat:@"%@", self.places[index][@"rating"]];
+                NSString * googlePlacesID = self.places[index][@"place_id"];
+                NSString * icon = self.places[index][@"icon"];
+                double lat = [self.places[index][@"geometry"][@"location"][@"lat"] floatValue];
+                double lng = [self.places[index][@"geometry"][@"location"][@"lng"] floatValue];
+                
+                MyCustomMarker * newMarker = [[MyCustomMarker alloc]init];
+                newMarker.title = title;
+                newMarker.snippet = snippet;
+                newMarker.position = CLLocationCoordinate2DMake(lat, lng);
+                newMarker.placeID = googlePlacesID;
+                newMarker.iconWebString = icon;
+                newMarker.map = self.mapView;
+            }
+        });
     }];
         
     [googleData resume];
 }
-
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    [self.searchBar resignFirstResponder];
-//    [[self view] endEditing:YES];
-//}
 
 @end
